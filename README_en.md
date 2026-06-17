@@ -29,8 +29,8 @@ The AI will automatically mount the skill, read the built-in protocol, write the
 ### Daily Interaction
 You don't need to memorize complex commands. Just talk to your AI using natural language:
 - **"Remember this pitfall" / "Make this a strict rule"**: The AI will immediately log it into the candidate memory pool.
-- **"What have we done over the past few days?"**: The AI will render and open a beautiful project timeline HTML page.
-- **"Suspend the current work"**: The AI will create a Pending Hook so you can easily resume tomorrow.
+- **"Open timeline"**: The AI will render and open a beautiful project timeline HTML page.
+- **"Summarize current task into a todo, I'm switching to Cursor"** or **"I have an idea for a feature, log it"**: The AI will create a cross-session Pending Hook, allowing you to seamlessly resume context anywhere.
 
 *For detailed underlying APIs and protocol designs, please refer to [`SKILL.md`](./SKILL.md) and [`references/tracemind-protocol.md`](./references/tracemind-protocol.md).*
 
