@@ -20,11 +20,11 @@
 
 ## 🚀 Usage
 
-### Initialization
-In any code project, when you open your AI chat for the first time, simply send:
-> "Please mount and read the tracemind skill to initialize project memory."
+### Initialization & Deployment
+In any code project, when opening your AI chat for the first time, simply invoke the skill (using `/` or `@` depending on your client):
+> `/tracemind` or `@tracemind`
 
-The AI will autonomously read the `references/rules-create.md` protocol, write the workflow rules to your project's local rule file (e.g., `AGENTS.md`), and initialize the database.
+The AI will automatically mount the skill, read the built-in protocol, write the workflow rules to your project's local rule file (e.g., `AGENTS.md`), and initialize the database.
 
 ### Daily Interaction
 You don't need to memorize complex commands. Just talk to your AI using natural language:
