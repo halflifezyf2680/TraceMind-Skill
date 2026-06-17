@@ -2,26 +2,38 @@
 
 [English](README_en.md) | [中文版](README.md)
 
-**TraceMind** 是一个以 Skill（技能）形式进行部署和挂载的项目级局部记忆引擎。它完全基于纯 Python 脚本驱动，能在**零复杂配置、零 MCP（模型上下文协议）服务依赖**的情况下，为目前主流的 AI 代码助手（如 Cursor, Windsurf, Claude Code, Antigravity, OpenCode 等）赋予持久化的项目记忆能力——包括开发事件时间线、经验法则沉淀、待办任务挂起以及策略记录。
+**TraceMind** 是一个零配置、面向 AI 代码助手（Cursor, Windsurf, Claude Code, Antigravity 等）的**项目级局部记忆引擎**。它完全基于 Python 原生脚本构建，无需部署复杂的 MCP 服务，即可赋予 AI 持久化的项目记忆能力。
 
-## 核心特性
+## ✨ 核心特性
 
-- **零配置本地存储**：在您的项目根目录下自动初始化并维护 `.mpm-data/mcp_memory.db` SQLite 数据库，插拔即用。
-- **时间线与备忘录**：在完成代码或文档的修改后即可记录备忘 (`memo.py`)，并能直接渲染出精美直观的 HTML 格式开发时间线 (`timeline.py`)。
-- **智能模糊召回**：“宽进严出”算法 (`recall.py`)。即使 AI Agent 记错了几个关键词，也能通过近义词网络兜底，并在结果呈现时执行极高的精度过滤。
-- **三步反思工作流 (3-Step Reflection)**：在处理完复杂的顽固 BUG 或阶段性任务后，AI 会自动触发“记录流水账 -> 跨表翻找历史大坑 -> 提纯提炼经验”的 3 步闭环，在最节省 Context Token 的情况下，实现项目知识的自动升维。
-- **经验沉淀与极速固化 (Fast Evolution)**：通过 `remember.py` 记录项目中的避坑指南与铁律。我们优化了内部算法：当某条候选经验被二次验证有效后，其置信度将瞬间跃升，自动被**写回并固化**到您当前 IDE 的系统规则文件（如 `AGENTS.md` 或 `.cursor/rules/tracemind.mdc`）中，形成完美闭环。
-- **任务挂起**：在工作因某些原因被阻塞或需要等待确认时，随时挂起并管理待办任务 (`hook.py`)。
+- **零配置插拔即用**：无需部署服务端。只需将本 Skill 放入目录，即可在项目根目录自动维护 SQLite 记忆库。
+- **时间线与备忘录**：在完成代码或文档修改后，自动记录备忘，并生成直观的 HTML 格式项目开发时间线。
+- **智能模糊召回**：内置“宽进严出”算法，即便 AI 遗忘确切关键词，也能通过近义词网络精准召回历史采坑记录。
+- **三步反思工作流 (3-Step Reflection)**：在解决复杂 Bug 或完成重要阶段任务后，AI 会自动触发“记录流水账 -> 跨表翻找历史大坑 -> 提炼新经验”闭环，极大地节省 Token。
+- **经验极速固化**：当某条候选经验被二次验证有效，其置信度将瞬间跃升，并自动**硬编码**到您的 IDE 系统规则（如 `.cursor/rules` 或 `AGENTS.md`）中，永远不再犯同样的错。
 
-## 架构哲学
+## 📦 安装说明
 
-TraceMind 遵循了极其克制且解耦的架构设计：
+1. 前往本仓库的 [Releases 页面](https://github.com/halflifezyf2680/TraceMind-Skill/releases) 下载最新的 `tracemind-skill-vX.X.X.zip`。
+2. 将压缩包解压后，得到一个干净的 `tracemind` 文件夹。
+3. 将该文件夹放置到您的 AI IDE 或 Agent 的全局技能（Skills）目录下（例如 `~/.gemini/config/skills/` 或您自定义的技能挂载目录）。
 
-1. **大模型认知层**：大模型（AI Agent）自己负责阅读参考文档 `references/rules-create.md`，然后发挥它的聪明才智，安全地将协议追加到您项目中已有的各类 `.md` 或 `.mdc` 规则文件中。绝对不破坏您已有的 YAML Frontmatter 格式。
-2. **底层脚本执行层**：枯燥的 SQLite 增删改查、HTML 时间线渲染、日志快照导出，则全部由稳定可控的 Python 原生标准库脚本完成。
+## 🚀 使用指南
 
-## 使用方法
+### 启动与挂载
+在您的任意代码项目中，首次呼出 AI 时，只需发送指令：
+> "请挂载并阅读 tracemind skill，初始化项目记忆。"
 
-详细的 AI 挂载规则、触发动作词汇表以及内部运行协议，请参考：
-- [`SKILL.md`](./SKILL.md) （供 AI 挂载识别的技能描述文件）
-- [`references/tracemind-protocol.md`](./references/tracemind-protocol.md) （核心协议说明书）
+AI 会自动阅读内置的 `references/rules-create.md` 协议，并将工作流守则写入您当前项目的规则文件中（如 `AGENTS.md`），随后自动初始化数据库。
+
+### 日常交互
+您无需记住复杂的命令，直接用自然语言与 AI 沟通即可触发记忆机制：
+- **"记住这个坑" / "设为铁律"**：AI 会立刻将其写入候选经验池。
+- **"这几天我们都做了什么？"**：AI 会帮您调用脚本，渲染并打开一个精美的项目时间线 HTML 页面。
+- **"把手头的工作挂起"**：AI 会记录一个 Pending Hook，方便您明天继续跟进。
+
+*详细的底层 API 和协议设计，请参阅 [`SKILL.md`](./SKILL.md) 与 [`references/tracemind-protocol.md`](./references/tracemind-protocol.md)。*
+
+## 📄 开源协议
+
+本项目采用 [MIT License](./LICENSE) 开源协议。
