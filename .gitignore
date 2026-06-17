@@ -1,0 +1,9 @@
+/target
+
+.mpm-data/
+dev-log-archive/
+agents/
+AGENTS.md
+dev-log.md
+__pycache__/
+*.pyc
